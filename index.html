@@ -24,7 +24,7 @@
             width: 210mm;
             height: 296mm; /* A4 Standard */
             background: white;
-            padding: 5mm; /* थोड़ा पैडिंग ताकि बॉर्डर सेफ रहे */
+            padding: 5mm; 
             position: relative;
             box-sizing: border-box;
             overflow: hidden;
@@ -34,8 +34,8 @@
             border: 4px solid #D81B60;
             border-style: double;
             border-width: 6px;
-            height: 100%; /* पेज की हाइट को पूरा लेगा */
-            box-sizing: border-box; /* बॉर्डर को हाइट के अंदर रखेगा */
+            height: 100%; 
+            box-sizing: border-box; 
             padding: 15px 35px;
             display: flex;
             flex-direction: column;
@@ -94,15 +94,32 @@
         /* --- Form Content --- */
         .body-content {
             flex-grow: 1;
-            font-size: 16px; /* फ़ॉन्ट साइज */
-            line-height: 1.6; /* लाइन गैप कम किया ताकि सब फिट हो */
+            font-size: 16px; 
+            line-height: 1.6; 
         }
 
+        /* NEW: Split Row for Straight Columns */
         .row {
             display: flex;
             align-items: baseline;
-            margin-bottom: 6px; /* गैप कम किया */
+            margin-bottom: 6px; 
             width: 100%;
+        }
+
+        /* Force 50% width for columns to align perfectly */
+        .col-half {
+            flex: 0 0 50%;
+            max-width: 50%;
+            display: flex;
+            align-items: baseline;
+            padding-right: 10px;
+            box-sizing: border-box;
+        }
+
+        .col-full {
+            flex: 1;
+            display: flex;
+            align-items: baseline;
         }
 
         .label {
@@ -122,10 +139,11 @@
             outline: none;
             padding: 0 5px;
             flex-grow: 1;
+            width: 100%; /* Ensures input fills the space */
         }
         
-        .w-short { flex-grow: 0; width: 50px; text-align: center; }
-        .w-date { flex-grow: 0; width: 110px; text-align: center; }
+        .w-short { flex-grow: 0; width: 40px; text-align: center; min-width: 40px; }
+        .w-date { flex-grow: 0; width: 100px; text-align: center; min-width: 100px; }
         .w-med { flex-grow: 0; width: 140px; }
 
         .center-statement {
@@ -146,9 +164,9 @@
         .bottom-area {
             display: flex;
             justify-content: space-between;
-            align-items: flex-end; /* नीचे अलाइन करेगा */
+            align-items: flex-end; 
             margin-top: 20px;
-            padding-bottom: 10px; /* बॉर्डर से थोड़ा ऊपर */
+            padding-bottom: 10px; 
         }
 
         .photo-container {
@@ -156,7 +174,7 @@
             height: 190px;
             border: 1px dashed #999;
             position: relative;
-            resize: both;
+            resize: both; /* Kept resizing enabled */
             overflow: hidden;
             background: #fdfdfd;
         }
@@ -173,7 +191,6 @@
             text-align: center;
             font-weight: 800;
             width: 250px;
-            /* लोकेशन फिक्स: बॉटम से थोड़ा ऊपर, फोटो के लेवल में */
             margin-bottom: 40px; 
         }
 
@@ -182,13 +199,13 @@
             body { background: none; }
             .page { 
                 width: 100%; 
-                height: 100vh; /* पूरा पेज */
+                height: 100vh; 
                 margin: 0; 
                 border: none; 
             }
             .border-frame { 
                 border: 4px double #D81B60 !important; 
-                height: 98%; /* थोड़ा मार्जिन ताकि बॉर्डर कटे नहीं */
+                height: 98%; 
             }
             input { border-bottom: none !important; }
             .photo-container { border: none; resize: none; }
@@ -235,49 +252,78 @@
             </div>
 
             <div class="row">
-                <span class="label">पिता श्री –</span> <input type="text">
-                <span class="label" style="margin-left: 20px;">माता श्रीमती –</span> <input type="text">
+                <div class="col-half">
+                    <span class="label">पिता श्री –</span> <input type="text">
+                </div>
+                <div class="col-half">
+                    <span class="label">माता श्रीमती –</span> <input type="text">
+                </div>
             </div>
 
             <div class="row">
-                <span class="label">जन्मतिथि –</span> <input type="text" class="w-date">
-                <span class="label" style="margin-left: 15px;">आयु –</span> <input type="text" class="w-short">
-                <span class="label">वर्ष</span>
-                <span class="label" style="margin-left: 15px;">जाति–</span> <input type="text" class="w-med">
+                <div class="col-half">
+                    <span class="label">जन्मतिथि –</span> <input type="text" class="w-date">
+                </div>
+                <div class="col-half">
+                    <span class="label">आयु –</span> <input type="text" class="w-short">
+                    <span class="label">वर्ष</span>
+                    <span class="label" style="margin-left: 10px;">जाति–</span> <input type="text">
+                </div>
             </div>
 
             <div class="row">
-                <span class="label">ग्राम –</span> <input type="text">
-                <span class="label" style="margin-left: 20px;">थाना –</span> <input type="text" class="w-med">
+                <div class="col-half">
+                    <span class="label">ग्राम –</span> <input type="text">
+                </div>
+                <div class="col-half">
+                    <span class="label">थाना –</span> <input type="text">
+                </div>
             </div>
 
             <div class="row">
-                <span class="label">जिला –</span> <input type="text" class="w-med">
-                <span class="label">का निवासी हैं</span>
-                <div style="flex-grow: 1;"></div>
+                <div class="col-full">
+                    <span class="label">जिला –</span> <input type="text" style="max-width: 200px;">
+                    <span class="label">का निवासी हैं</span>
+                </div>
             </div>
 
             <div class="row" style="margin-top: 15px;">
-                <span class="label">जिन्होंने आयुषमति –</span> <input type="text">
-                <span class="label" style="margin-left: 20px;">पिता श्री –</span> <input type="text">
+                <div class="col-half">
+                    <span class="label">जिन्होंने आयुषमति –</span> <input type="text">
+                </div>
+                <div class="col-half">
+                    <span class="label">पिता श्री –</span> <input type="text">
+                </div>
             </div>
 
             <div class="row">
-                <span class="label">माता श्रीमती –</span> <input type="text">
-                <span class="label" style="margin-left: 20px;">जन्मतिथि –</span> <input type="text" class="w-date">
+                <div class="col-half">
+                    <span class="label">माता श्रीमती –</span> <input type="text">
+                </div>
+                <div class="col-half">
+                    <span class="label">जन्मतिथि –</span> <input type="text" class="w-date">
+                </div>
             </div>
 
             <div class="row">
-                <span class="label">आयु –</span> <input type="text" class="w-short">
-                <span class="label">वर्ष</span>
-                <span class="label" style="margin-left: 15px;">जाति–</span> <input type="text" class="w-med">
-                <span class="label" style="margin-left: 15px;">ग्राम –</span> <input type="text">
+                <div class="col-half">
+                    <span class="label">आयु –</span> <input type="text" class="w-short">
+                    <span class="label">वर्ष</span>
+                    <span class="label" style="margin-left: 10px;">जाति–</span> <input type="text">
+                </div>
+                <div class="col-half">
+                    <span class="label">ग्राम –</span> <input type="text">
+                </div>
             </div>
 
             <div class="row">
-                <span class="label">थाना –</span> <input type="text" class="w-med">
-                <span class="label" style="margin-left: 20px;">जिला –</span> <input type="text" class="w-med">
-                <span class="label">के</span>
+                <div class="col-half">
+                    <span class="label">थाना –</span> <input type="text">
+                </div>
+                <div class="col-half">
+                    <span class="label">जिला –</span> <input type="text">
+                    <span class="label">के</span>
+                </div>
             </div>
 
             <div class="row" style="margin-top: 10px;">
